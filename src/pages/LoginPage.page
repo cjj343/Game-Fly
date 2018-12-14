@@ -1,0 +1,14 @@
+<apex:page controller="LoginPageController">
+	<apex:form >
+        <apex:pageBlock title="Login">
+            <apex:pageBlockSection title="Input Info">
+            	<div align="left">
+	                Username: <apex:inputText value="{!username}"/>
+	                Password: <apex:inputText value="{!password}" />
+            	</div>
+            </apex:pageBlockSection>
+                <apex:commandButton value="Login" action="{!login}"/>
+                <apex:outputLink value="RegisterPage"> Register </apex:outputLink>
+        </apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,20 @@
+<apex:page controller="LoginPageController">
+    <apex:form >
+		<apex:pageBlock title="Create Account" mode="edit">
+			<apex:pageBlockSection title="Create Account Section" columns="2">
+		        <apex:inputField value="{!newAccount.GF_Account_Customer_Name__c}"/> <br/>		        
+		        <apex:inputField value="{!newAccount.GF_Account_Customer_Email__c}"/> <br/>
+		        <apex:inputField value="{!newAccount.GF_Account_Customer_Phone__c}"/> <br/>
+		        <apex:inputField value="{!newAccount.GF_Account_Customer_Shipping_Address__c}"/> <br/>
+		        <apex:inputField value="{!newAccount.GF_Account_Customer_Billing_Address__c}"/> <br/>
+		        <apex:inputField value="{!newAccount.Card_Type__c}"/> <br/>
+		        <apex:inputField value="{!newAccount.Card_Number__c}"/> <br/>
+		        <apex:inputField value="{!newAccount.Expiration_Date__c}"/> <br/>
+		        <apex:inputField value="{!newAccount.Security_Code__c}"/> <br/>
+		        <apex:inputField value="{!newAccount.GF_Username__c}"/> <br/>		        
+		        <apex:inputField value="{!newAccount.GF_Password__c}"/> <br/>		        
+		        <apex:commandButton value="Create Account" action="{!createAccount}"/>
+		   </apex:pageBlockSection>
+		</apex:pageBlock>
+  	</apex:form>
+</apex:page>

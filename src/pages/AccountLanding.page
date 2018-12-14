@@ -1,0 +1,46 @@
+<apex:page controller="LoginPageController">
+	<script type="text/javascript">
+        function selectAllCheckboxes(obj,receivedInputID){
+            var inputCheckBox = document.getElementsByTagName("input");                  
+            for(var i=0; i<inputCheckBox.length; i++){          
+                if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+                    inputCheckBox[i].checked = obj.checked;
+                }
+            }
+        }
+    </script>
+    <apex:form >
+        <apex:pageBlock >
+			<apex:pageBlockSection title="Account Information" columns="2">
+		        <apex:outputField value="{!userAcct[0].GF_Account_Customer_Name__c}"/> <br/>		        
+		        <apex:outputField value="{!userAcct[0].GF_Account_Customer_Email__c}"/> <br/>
+		        <apex:outputField value="{!userAcct[0].GF_Account_Customer_Phone__c}"/> <br/>
+		        <apex:outputField value="{!userAcct[0].GF_Username__c}"/> <br/>		        
+		        <apex:outputField value="{!userAcct[0].GF_Password__c}"/> <br/>
+		       	<apex:outputField value="{!userAcct[0].GF_Account_Customer_Shipping_Address__c}"/> <br/>
+		        <apex:outputField value="{!userAcct[0].GF_Account_Customer_Billing_Address__c}"/> <br/>
+		        <apex:outputField value="{!userAcct[0].Card_Type__c}"/> <br/>
+		        <apex:outputField value="{!userAcct[0].Card_Number__c}"/> <br/>
+		        <apex:outputField value="{!userAcct[0].Expiration_Date__c}"/> <br/>
+		        <apex:outputField value="{!userAcct[0].Security_Code__c}"/> <br/>
+		        <apex:commandButton value="Update" action="{!updateAcctInfo}"/>	        
+		   </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!gameWrapperList}" var="item">
+                <apex:facet name="header" > Games </apex:facet>  
+                <apex:column>
+                    <apex:facet name="header">
+                        <apex:inputCheckbox onclick="selectAllCheckboxes(this,'inputId')"/>
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!item.status}"/>
+                </apex:column>
+                <apex:column value="{!item.game.Name}" headerValue="Product Name"/>
+                <apex:column value="{!item.game.GF_Game_Console__c}" headerValue="Console"/>
+                <apex:column value="{!item.game.GF_Game_Description__c}" headerValue="Description"/>
+                <apex:column value="{!item.game.GF_Game_Price__c}" headerValue="Price"/>      
+            </apex:pageBlockTable>
+            <apex:commandButton value="Add Item(s)"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
