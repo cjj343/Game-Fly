@@ -1,0 +1,15 @@
+<apex:page controller="addGameController">
+	<apex:form >
+		<apex:pageblock >
+            <apex:pageBlockSection title="New Game">
+                <apex:inputField value="{!newGame.name}"/><br/>
+                <apex:inputField value="{!newGame.GF_Game_Console__c}"/><br/>
+                <apex:inputField value="{!newGame.GF_Game_Description__c}"/><br/>
+                <apex:inputField value="{!newGame.GF_Game_Price__c}"/><br/>
+                <apex:inputField value="{!newGame.GF_Game_Stock__c}"/><br/>
+                <apex:commandButton value="Add" action="{!saveNewGame}"/>
+                <apex:commandButton value="Done" action="{!done}"/>
+            </apex:pageBlockSection>				
+		</apex:pageblock>
+	</apex:form>
+</apex:page>

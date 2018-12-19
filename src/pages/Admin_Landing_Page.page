@@ -1,6 +1,31 @@
-<apex:page >
-<!-- Begin Default Content REMOVE THIS -->
-<h1>Congratulations</h1>
-This is your new Page
-<!-- End Default Content REMOVE THIS -->
+<apex:page controller="LoginPageController">
+	<script type="text/javascript">
+        function selectAllCheckboxes(obj,receivedInputID){
+            var inputCheckBox = document.getElementsByTagName("input");                  
+            for(var i=0; i<inputCheckBox.length; i++){          
+                if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+                    inputCheckBox[i].checked = obj.checked;
+                }
+            }
+        }
+    </script>
+	<apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!gameWrapperList}" var="item">
+                <apex:facet name="header" > Games </apex:facet>  
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:inputCheckbox onclick="selectAllCheckboxes(this,'inputId')"/>
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!item.deleteGame}"/>
+                </apex:column>
+                <apex:column value="{!item.game.Name}" headerValue="Title"/>
+                <apex:column value="{!item.game.GF_Game_Console__c}" headerValue="Console"/>
+                <apex:column value="{!item.game.GF_Game_Description__c}" headerValue="Description"/>
+                <apex:column value="{!item.game.GF_Game_Price__c}" headerValue="Price"/>      
+            </apex:pageBlockTable>
+            <apex:commandButton value="Add Game(s)" action="{!addGameRedirect}"/>
+            <apex:commandButton value="Remove Selected Game(s)" action="{!deleteGames}"/>
+        </apex:pageBlock>
+	</apex:form>
 </apex:page>

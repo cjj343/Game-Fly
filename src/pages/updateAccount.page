@@ -1,4 +1,4 @@
-<apex:page controller = "LoginPageController">
+<apex:page controller="LoginPageController">
     <apex:form >
 		<apex:pageBlock mode="edit">
 			<apex:pageBlockSection title="Update Account" columns="2">
@@ -13,11 +13,8 @@
 		        <apex:inputField value="{!userAcct[0].Card_Number__c}"/> <br/>
 		        <apex:inputField value="{!userAcct[0].Expiration_Date__c}"/> <br/>
 		        <apex:inputField value="{!userAcct[0].Security_Code__c}"/> <br/>	        
-		        <apex:commandButton value="Save" action= "{!saveAcctInfo}"/>
+		        <apex:commandButton value="Save" action="{!saveAcctInfo}"/>
 		   </apex:pageBlockSection>
 		</apex:pageBlock>
   	</apex:form>
 </apex:page>
-
-        
-

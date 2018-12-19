@@ -1,0 +1,54 @@
+<apex:page controller="LoginPageController">
+	<script type="text/javascript">
+        function selectAllCheckboxes(obj,receivedInputID){
+            var inputCheckBox = document.getElementsByTagName("input");                  
+            for(var i=0; i<inputCheckBox.length; i++){          
+                if(inputCheckBox[i].id.indexOf(receivedInputID)!=-1){                                     
+                    inputCheckBox[i].checked = obj.checked;
+                }
+            }
+        }
+    </script>
+	<apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockTable value="{!gameWrapperList}" var="item">
+                <apex:facet name="header" > Games </apex:facet>  
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:inputCheckbox onclick="selectAllCheckboxes(this,'inputId')"/>
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!item.status}"/>
+                </apex:column>
+                <apex:column value="{!item.game.Name}" headerValue="Title"/>
+                <apex:column value="{!item.game.GF_Game_Console__c}" headerValue="Console"/>
+                <apex:column value="{!item.game.GF_Game_Description__c}" headerValue="Description"/>
+                <apex:column value="{!item.game.GF_Game_Price__c}" headerValue="Price"/>      
+            </apex:pageBlockTable>
+            <apex:commandButton value="Add Item(s)" action="{!processSelected}"/>
+        </apex:pageBlock>
+         <apex:pageBlock >
+			<apex:pageBlockTable value="{!cartList}" var="p">
+                <apex:facet name="header">Cart</apex:facet>
+                <apex:column >
+                    <apex:facet name="header">
+                        <apex:inputCheckbox onclick="selectAllCheckboxes(this,'inputId')"/>
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!p.remove}" id="inputId"/>
+                </apex:column>
+                <apex:column value="{!p.game.Name}" headerValue="Title"/>
+                <apex:column value="{!p.game.GF_Game_Console__c}" headerValue="Manufacturer"/>
+                <apex:column value="{!p.game.GF_Game_Description__c}" headerValue="Description"/>
+                <apex:column value="{!p.game.GF_Game_Price__c}" headerValue="Price"/>
+                <apex:column value="{!p.Quantity}" headerValue="Quantity"/>
+                <apex:column value="{!p.total}" headerValue="Total"/> 
+            </apex:pageBlockTable>
+            <apex:commandButton value="Remove Selected" action="{!updateCart}" />
+            <!--<apex:commandButton value="Check Out" action="{!checkOut}" /> -->
+        </apex:pageBlock>
+        <apex:pageBlock >
+            <div align = "right">
+                <apex:outputText > Cart Total: {!cartTotal} </apex:outputText>     
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

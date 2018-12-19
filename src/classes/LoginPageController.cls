@@ -9,12 +9,16 @@ public with sharing class LoginPageController {
     private Id adminAccId;
     public GF_Account__c newAccount {get; set;}
     public List<gameWrapper> gameWrapperList {get; set;}
+    public List<gameWrapper> cartList {get; set;}
+    public Decimal cartTotal {get; set;}
+    List<gameWrapper> selectedProducts = new List<gameWrapper>();
    	       
 	public class gameWrapper {
         public GF_Game__c game { get; set; }
         public Integer quantity { get; set; }
         public Boolean status { get; set; }
         public Boolean remove { get; set; }
+        public Boolean deleteGame { get; set; }
         public Decimal total { get; set; }
         
         
@@ -23,14 +27,13 @@ public with sharing class LoginPageController {
             quantity = q;
             status = false;
             remove = false;
+            deleteGame = false;
             total = 0;
- 
         }
     }
-    
-    
-    
+      
     public LoginPageController(){
+    	cartTotal = 0;
  		newAccount = new GF_Account__c();
  		userAccId = ApexPages.currentPage().getParameters().get('userAccountId');
  		adminAccId = ApexPages.currentPage().getParameters().get('adminAccountId');
@@ -89,17 +92,12 @@ public with sharing class LoginPageController {
 			return null;         
    
 		}	
-    
-    	
-
-    	
-	
     }
     
     public PageReference updateAcctInfo(){
     	    PageReference pageRef = new PageReference('/apex/updateAccount');
             pageRef.setRedirect(true);
-            pageRef.getParameters().put('userAccountId', adminAccId);
+            pageRef.getParameters().put('userAccountId', userAccId);
             return pageRef;	
     }
     
@@ -125,4 +123,95 @@ public with sharing class LoginPageController {
         pageRef.setRedirect(true);
         return pageRef;		
     }
+    
+    public PageReference rentGames(){
+    	PageReference pageRef = new PageReference('/apex/shoppingPage');
+    	pageRef.getParameters().put('userAccountId', userAccId);
+        pageRef.setRedirect(true);
+        return pageRef;  	
+    }
+    
+    public void processSelected() { 
+        cartList = new List<gameWrapper>();
+        cartTotal = 0;
+        
+        for(gameWrapper wrapObj : gameWrapperList) {
+            if(wrapObj.status == true) {
+                if(selectedProducts.contains(wrapObj)){
+                    selectedProducts[selectedProducts.indexOf(wrapObj)].Quantity++;
+                    selectedProducts[selectedProducts.indexOf(wrapObj)].total = selectedProducts[selectedProducts.indexOf(wrapObj)].Quantity * selectedProducts[selectedProducts.indexOf(wrapObj)].game.GF_Game_Price__c;
+                    selectedProducts[selectedProducts.indexOf(wrapObj)].Status = true;
+                }
+                else{
+                    selectedProducts.add(wrapObj);
+                    selectedProducts[selectedProducts.indexOf(wrapObj)].Status = true;
+                    selectedProducts[selectedProducts.indexOf(wrapObj)].Quantity++;
+                    selectedProducts[selectedProducts.indexOf(wrapObj)].total = selectedProducts[selectedProducts.indexOf(wrapObj)].Quantity * selectedProducts[selectedProducts.indexOf(wrapObj)].game.GF_Game_Price__c;
+                }
+            }
+        }
+        
+        for(gameWrapper cartItem : selectedProducts){
+            cartTotal += cartItem.total;
+            cartList.add(cartItem);
+        }
+    }
+    
+    public void updateCart(){
+        for(gameWrapper wrapObj : cartList) {
+            if(wrapObj.remove == true) {
+                    wrapObj.remove = false;
+                    wrapObj.status = false;
+                    wrapObj.Quantity = 0;
+                    wrapObj.total = 0;
+                    selectedProducts.remove(selectedProducts.indexOf(wrapObj));
+            }
+        }
+        
+        cartList = new List<gameWrapper>();
+        cartTotal = 0;
+        for(gameWrapper cartItem : selectedProducts){
+            cartTotal += cartItem.total;
+            cartList.add(cartItem);
+        }
+    }
+    
+    /*
+    public void checkOut(){
+        Transaction__c trans = new Transaction__c(Name = 'testtransfromVF1');
+        insert trans;
+        ID transID = trans.Id;
+        List<Product_Order__c> prods = new List<Product_Order__c>();
+        
+        for(productWrapper i : selectedProducts){
+            prods.add(new Product_Order__c(Transaction__c = transID, Product__c = i.prod.Id, Quantity__c = i.Quantity));
+        }
+        
+        cartTotal = 0;
+        selectedProducts.clear();
+        cartList.clear();
+        
+        insert prods;
+        update trans;
+    }
+    */
+    
+    public PageReference addGameRedirect(){
+    	PageReference pageRef = new PageReference('/apex/addGamePage');
+    	pageRef.getParameters().put('adminAccountId', adminAccId);
+        pageRef.setRedirect(true);
+        return pageRef;  	
+    }
+    
+    public PageReference deleteGames(){
+    	for(gameWrapper wrapObj : gameWrapperList) {
+            if(wrapObj.deleteGame == true) {
+				delete wrapObj.game;
+            }
+        }
+        PageReference tempPage = ApexPages.currentPage();           
+        tempPage.setRedirect(true);
+        return tempPage;
+    }
+
 }
