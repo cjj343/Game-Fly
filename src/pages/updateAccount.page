@@ -2,17 +2,17 @@
     <apex:form >
 		<apex:pageBlock mode="edit">
 			<apex:pageBlockSection title="Update Account" columns="2">
-		        <apex:inputField value="{!userAcct[0].GF_Account_Customer_Name__c}"/> <br/>		        
-		        <apex:inputField value="{!userAcct[0].GF_Account_Customer_Email__c}"/> <br/>
-		        <apex:inputField value="{!userAcct[0].GF_Account_Customer_Phone__c}"/> <br/>
-		        <apex:inputField value="{!userAcct[0].GF_Username__c}"/> <br/>		        
-		        <apex:inputField value="{!userAcct[0].GF_Password__c}"/> <br/>
-		       	<apex:inputField value="{!userAcct[0].GF_Account_Customer_Shipping_Address__c}"/> <br/>
-		        <apex:inputField value="{!userAcct[0].GF_Account_Customer_Billing_Address__c}"/> <br/>
-		        <apex:inputField value="{!userAcct[0].Card_Type__c}"/> <br/>
-		        <apex:inputField value="{!userAcct[0].Card_Number__c}"/> <br/>
-		        <apex:inputField value="{!userAcct[0].Expiration_Date__c}"/> <br/>
-		        <apex:inputField value="{!userAcct[0].Security_Code__c}"/> <br/>	        
+		        <apex:inputField value="{!accounts[0].GF_Account_Customer_Name__c}"/> <br/>		        
+		        <apex:inputField value="{!accounts[0].GF_Account_Customer_Email__c}"/> <br/>
+		        <apex:inputField value="{!accounts[0].GF_Account_Customer_Phone__c}"/> <br/>
+		        <apex:inputField value="{!accounts[0].GF_Username__c}"/> <br/>		        
+		        <apex:inputField value="{!accounts[0].GF_Password__c}"/> <br/>
+		       	<apex:inputField value="{!accounts[0].GF_Account_Customer_Shipping_Address__c}"/> <br/>
+		        <apex:inputField value="{!accounts[0].GF_Account_Customer_Billing_Address__c}"/> <br/>
+		        <apex:inputField value="{!accounts[0].Card_Type__c}"/> <br/>
+		        <apex:inputField value="{!accounts[0].Card_Number__c}"/> <br/>
+		        <apex:inputField value="{!accounts[0].Expiration_Date__c}"/> <br/>
+		        <apex:inputField value="{!accounts[0].Security_Code__c}"/> <br/>	        
 		        <apex:commandButton value="Save" action="{!saveAcctInfo}"/>
 		   </apex:pageBlockSection>
 		</apex:pageBlock>
