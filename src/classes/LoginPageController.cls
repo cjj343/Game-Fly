@@ -21,6 +21,9 @@ public with sharing class LoginPageController {
     public List<gameWrapper> cartList {get; set;}
     public Decimal cartTotal {get; set;}
     List<gameWrapper> selectedProducts = new List<gameWrapper>();
+    
+    //search term
+    public String searchTerm {get; set;}
    	
    	//game wrapper holds a game object and status variables       
 	public class gameWrapper {
@@ -202,25 +205,30 @@ public with sharing class LoginPageController {
         }
     }
     
-    /*
+  
     public void checkOut(){
-        Transaction__c trans = new Transaction__c(Name = 'testtransfromVF1');
-        insert trans;
-        ID transID = trans.Id;
-        List<Product_Order__c> prods = new List<Product_Order__c>();
-        
-        for(productWrapper i : selectedProducts){
-            prods.add(new Product_Order__c(Transaction__c = transID, Product__c = i.prod.Id, Quantity__c = i.Quantity));
+        List <GF_Transaction__c> transactions = new List<GF_Transaction__c>();
+        GF_Transaction__c trans;
+        //insert trans;
+        //ID transID = trans.Id;
+        //List<Product_Order__c> prods = new List<Product_Order__c>();
+       
+        for(gameWrapper g : selectedProducts){
+        	trans = new GF_Transaction__c();
+        	trans.GF_Account__c = userAccId;
+        	trans.GF_Game__c = g.game.id;
+        	trans.name = Date.today() + '_' + userAccId + '_' + g.game.name;
+            transactions.add(trans);
         }
         
         cartTotal = 0;
         selectedProducts.clear();
         cartList.clear();
         
-        insert prods;
-        update trans;
+        //insert prods;
+        insert transactions;
     }
-    */
+   
     
     //page redirect to admin functions
     public PageReference addGameRedirect(){
@@ -253,6 +261,30 @@ public with sharing class LoginPageController {
     public void saveNewGame(){
 		games.add(newGame);
 		newGame = new GF_Game__c();
+		
+	}
+	
+	public void searchForGame(){
+		if(String.isNotEmpty(searchTerm)){
+			List<List<sObject>> searchList = [FIND :searchTerm IN ALL FIELDS RETURNING GF_Game__c(Name, GF_Game_Console__c, GF_Game_Description__c, GF_Game_Price__c)];
+			List<GF_Game__c> res = new List<GF_Game__c>();
+			res = searchList[0];
+	        if(gameWrapperList != null) {
+	            gameWrapperList = new List<gameWrapper>();
+	            for(GF_Game__c g: res) {
+	                gameWrapperList.add(new gameWrapper(g, 0));
+	            }
+	        }
+		}
+	}
+	
+	public void refreshList(){
+		if(gameWrapperList != null) {
+            gameWrapperList = new List<gameWrapper>();
+            for(GF_Game__c g: [SELECT Name, GF_Game_Console__c, GF_Game_Description__c, GF_Game_Price__c FROM GF_Game__c]) {
+                gameWrapperList.add(new gameWrapper(g, 0));
+            }
+        }
 		
 	}
 

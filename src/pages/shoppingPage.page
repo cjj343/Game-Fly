@@ -11,6 +11,9 @@
     </script>
 	<apex:form >
         <apex:pageBlock >
+        	<apex:commandButton value="Search" action="{!searchForGame}"/>
+        	<apex:inputtext value="{!searchTerm}"/> <br/>
+        	<apex:commandButton value="Refresh List" action="{!refreshList}"/>
             <apex:pageBlockTable value="{!gameWrapperList}" var="item">
                 <apex:facet name="header" > Games </apex:facet>  
                 <apex:column >
@@ -43,7 +46,7 @@
                 <apex:column value="{!p.total}" headerValue="Total"/> 
             </apex:pageBlockTable>
             <apex:commandButton value="Remove Selected" action="{!updateCart}" />
-            <!--<apex:commandButton value="Check Out" action="{!checkOut}" /> -->
+            <apex:commandButton value="Check Out" action="{!checkOut}" />
         </apex:pageBlock>
         <apex:pageBlock >
             <div align = "right">
