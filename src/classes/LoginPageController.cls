@@ -12,6 +12,10 @@ public with sharing class LoginPageController {
     //admin accounts can only be created through Salesforce
     public GF_Account__c newAccount {get; set;}
     
+    //for admin add game page
+   	public GF_Game__c newGame {get; set;}
+	private List<GF_Game__c> games = new List<GF_Game__c>();
+    
     //containers to hold game items
     public List<gameWrapper> gameWrapperList {get; set;}
     public List<gameWrapper> cartList {get; set;}
@@ -42,6 +46,7 @@ public with sharing class LoginPageController {
     public LoginPageController(){
     	cartTotal = 0; //set cart total to zero
  		newAccount = new GF_Account__c();//initialize a new account if register is selected
+ 		newGame = new GF_Game__c(); //initialize new game object
  		userAccId = ApexPages.currentPage().getParameters().get('userAccountId');//populate id's
  		adminAccId = ApexPages.currentPage().getParameters().get('adminAccountId');
  		if(adminAcct == null){
@@ -236,5 +241,19 @@ public with sharing class LoginPageController {
         tempPage.setRedirect(true);
         return tempPage;
     }
+    
+    public PageReference done(){
+    	insert games;
+    	PageReference pageRef = new PageReference('/apex/Admin_Landing_Page');
+    	pageRef.getParameters().put('adminAccountId', adminAccId);
+        pageRef.setRedirect(true);
+        return pageRef;  	
+    }
+    
+    public void saveNewGame(){
+		games.add(newGame);
+		newGame = new GF_Game__c();
+		
+	}
 
 }
