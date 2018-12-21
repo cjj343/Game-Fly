@@ -2,17 +2,17 @@
     <apex:form >
         <apex:pageBlock >
 			<apex:pageBlockSection title="Account Information" columns="2">
-		        <apex:outputField value="{!userAcct[0].GF_Account_Customer_Name__c}"/> <br/>		        
-		        <apex:outputField value="{!userAcct[0].GF_Account_Customer_Email__c}"/> <br/>
-		        <apex:outputField value="{!userAcct[0].GF_Account_Customer_Phone__c}"/> <br/>
-		        <apex:outputField value="{!userAcct[0].GF_Username__c}"/> <br/>		        
-		        <apex:outputField value="{!userAcct[0].GF_Password__c}"/> <br/>
-		       	<apex:outputField value="{!userAcct[0].GF_Account_Customer_Shipping_Address__c}"/> <br/>
-		        <apex:outputField value="{!userAcct[0].GF_Account_Customer_Billing_Address__c}"/> <br/>
-		        <apex:outputField value="{!userAcct[0].Card_Type__c}"/> <br/>
-		        <apex:outputField value="{!userAcct[0].Card_Number__c}"/> <br/>
-		        <apex:outputField value="{!userAcct[0].Expiration_Date__c}"/> <br/>
-		        <apex:outputField value="{!userAcct[0].Security_Code__c}"/> <br/>
+		        <apex:outputField value="{!accounts[0].GF_Account_Customer_Name__c}"/> <br/>		        
+		        <apex:outputField value="{!accounts[0].GF_Account_Customer_Email__c}"/> <br/>
+		        <apex:outputField value="{!accounts[0].GF_Account_Customer_Phone__c}"/> <br/>
+		        <apex:outputField value="{!accounts[0].GF_Username__c}"/> <br/>		        
+		        <apex:outputField value="{!accounts[0].GF_Password__c}"/> <br/>
+		       	<apex:outputField value="{!accounts[0].GF_Account_Customer_Shipping_Address__c}"/> <br/>
+		        <apex:outputField value="{!accounts[0].GF_Account_Customer_Billing_Address__c}"/> <br/>
+		        <apex:outputField value="{!accounts[0].Card_Type__c}"/> <br/>
+		        <apex:outputField value="{!accounts[0].Card_Number__c}"/> <br/>
+		        <apex:outputField value="{!accounts[0].Expiration_Date__c}"/> <br/>
+		        <apex:outputField value="{!accounts[0].Security_Code__c}"/> <br/>
 		        <apex:commandButton value="Update" action="{!updateAcctInfo}"/>
 		        <apex:commandButton value="Rent Games" action="{!rentGames}"/>	        
 		   </apex:pageBlockSection>
