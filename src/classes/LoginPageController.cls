@@ -103,7 +103,9 @@ public with sharing class LoginPageController {
     
     public PageReference saveAcctInfo(){
     	update userAcct[0];
+    	
     	PageReference pageRef = new PageReference('/apex/AccountLanding');
+    	pageRef.getParameters().put('userAccountId', userAccId);
         pageRef.setRedirect(true);
         return pageRef;
     }
